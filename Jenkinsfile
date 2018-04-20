@@ -30,19 +30,16 @@ node {
         }
     }
 
-   /* stage('Push image') {
+    stage('Push image') {
       
      
          docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         } 
-    } */
+    } 
 
-    stage('Provision Dev App') {
-        /*
-         *
-         *  */
+/*    stage('Provision Dev App') {
 
         withCredentials([string(credentialsId: 'eaglesoj-morph', variable: 'bearer')]) {
             String morpheusUrl = 'https://192.168.1.69/api/apps'
@@ -53,6 +50,6 @@ node {
 
             echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
         }
-    }
+    } */
 
 }
