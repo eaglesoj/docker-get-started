@@ -49,34 +49,32 @@ node {
 
 		echo "bearer is ${bearer}"
 	
-		def getAuthTokenDockerHub(user, pass) {
+		
 
-			// Define our URL and make the connection
-			def url = new URL(morpheusUrl)
-			def conn = url.openConnection()
-			// Set the connection verb and headers
-			conn.setRequestMethod("POST")
-			conn.setRequestProperty("Content-Type", "application/json")
-			// Required to send the request body of our POST
-			conn.doOutput = true
+		// Define our URL and make the connection
+		def url = new URL(morpheusUrl)
+		def conn = url.openConnection()
+		// Set the connection verb and headers
+		conn.setRequestMethod("POST")
+		conn.setRequestProperty("Content-Type", "application/json")
+		// Required to send the request body of our POST
+		conn.doOutput = true
 
-			// Create our JSON Authentication string
-			//def authString = "{\"username\": \"${user}\", \"password\": \"${pass}\"}"
+		// Create our JSON Authentication string
+		//def authString = "{\"username\": \"${user}\", \"password\": \"${pass}\"}"
 
-			// Send our request
-			def writer = new OutputStreamWriter(conn.outputStream)
-			writer.write(postBody)
-			writer.flush()
-			writer.close()
-			conn.connect()
+		// Send our request
+		def writer = new OutputStreamWriter(conn.outputStream)
+		writer.write(postBody)
+		writer.flush()
+		writer.close()
+		conn.connect()
 
-			// Parse and return the token
-			def result = parseJSON(conn.content.text)
-			echo "result is ${result}"
-			echo result.token
-			return result.token
-
-			}
+		// Parse and return the token
+		def result = parseJSON(conn.content.text)
+		echo "result is ${result}"
+		echo result.token
+			
 			
            // echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
         }
