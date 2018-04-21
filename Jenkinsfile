@@ -50,8 +50,9 @@ node {
 			def jsonSlurper = new JsonSlurper()
 			def authresponse = jsonSlurper.parseText(response)
 			echo "authresponse is ${authresponse}"
-			
 			def accesstoken = authresponse.access_token
+			jsonSlurper=null
+			authresponse=null
 			echo "accesstoken is ${accesstoken}"
 			
             postBody = "{ \"tiers\": { \"App\": { \"linkedTiers\": [], \"instances\": [ { \"instance\": { \"type\": \"docker\", \"cloud\": \"MyVCenter\", \"layout\": { \"code\": \"docker-1.7-single\", \"id\": 280 }, \"name\": \"get-started\", \"expireDays\": \"1\" }, \"volumes\": [ { \"rootVolume\": true, \"name\": \"root\", \"size\": 1 } ], \"backup\": { \"createBackup\": false }, \"plan\": { \"id\": 99, \"code\": \"container-128\" }, \"metadata\": [ { \"name\": \"\", \"value\": \"\" } ], \"evars\": [ { \"name\": \"\", \"value\": \"\" } ], \"config\": { \"expose\": 8080, \"dockerImageVersion\": \"latest\", \"dockerRegistryId\": \"\", \"dockerImage\": \"jjeagleson/get-started\" }, \"ports\": [ { \"name\": \"\", \"port\": \"\", \"lb\": \"\" } ] } ] } }, \"name\": \"testapp\", \"templateImage\": \"\", \"image\": \"/assets/apps/template.png\", \"id\": 9, \"templateName\": \"test\", \"group\": { \"id\": 4, \"name\": \"Lakehouse\" }, \"environment\": \"Test\" }"
