@@ -48,7 +48,7 @@ node {
 
 			echo "bearer is ${bearer}"
 			
-			def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: postBody, url: "http://192.168.1.69/api/apps"
+			def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', customHeaders: [[name: 'Authorization', value: "BEARER ${bearer}"]], requestBody: postBody, url: "http://192.168.1.69/api/apps"
 			
 			echo "response is ${response}"
 			
