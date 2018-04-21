@@ -62,7 +62,7 @@ node {
 			
 			echo "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d \"${postBody}\""
 			
-			sh "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d ${postBody}"
+			sh "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d \"${postBody}\""
 			//def postresponse = readFile 'post.out'
 			
 			//echo "postresponse is ${postresponse}"
