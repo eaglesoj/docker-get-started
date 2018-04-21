@@ -49,7 +49,7 @@ node {
 
 			echo "bearer is ${bearer}"
 			
-			def response = httpRequest customHeaders: [[name: 'Authorization', value: 'BEARER ${bearer}']], url: ${morpheusUrl}
+			def response = httpRequest customHeaders: [[name: 'Authorization', value: "BEARER ${bearer}"]], url: 'https://192.168.1.69/api/apps'
 			
 			
            // echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
