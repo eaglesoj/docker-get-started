@@ -45,8 +45,8 @@ node {
         withCredentials([string(credentialsId: 'morpheus-credentials', variable: 'bearer')]) {
             String morpheusUrl = 'https://192.168.1.69/api/apps'
 			
-			def response = sh "curl -k -X POST --data \"${bearer}\" \"https://192.168.1.69/oauth/token?grant_type=password&scope=write&client_id=morph-customer\""
-			
+			sh "curl -k -X POST --data \"${bearer}\" \"https://192.168.1.69/oauth/token?grant_type=password&scope=write&client_id=morph-customer\" > curl.out"
+			def response = readFile 'curl.out'
 			def jsonSlurper = new JsonSlurper()
 			def authresponse = jsonSlurper.parseText(response)
 			echo "authresponse is ${authresponse}"
