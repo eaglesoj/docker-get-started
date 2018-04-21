@@ -55,18 +55,11 @@ node {
 			authresponse=null
 			echo "accesstoken is ${accesstoken}"
 			
-            postBody = "{ \"tiers\": { \"App\": { \"linkedTiers\": [], \"instances\": [ { \"instance\": { \"type\": \"docker\", \"cloud\": \"MyVCenter\", \"layout\": { \"code\": \"docker-1.7-single\", \"id\": 280 }, \"name\": \"get-started\", \"expireDays\": \"1\" }, \"volumes\": [ { \"rootVolume\": true, \"name\": \"root\", \"size\": 1 } ], \"backup\": { \"createBackup\": false }, \"plan\": { \"id\": 99, \"code\": \"container-128\" }, \"metadata\": [ { \"name\": \"\", \"value\": \"\" } ], \"evars\": [ { \"name\": \"\", \"value\": \"\" } ], \"config\": { \"expose\": 8080, \"dockerImageVersion\": \"latest\", \"dockerRegistryId\": \"\", \"dockerImage\": \"jjeagleson/get-started\" }, \"ports\": [ { \"name\": \"\", \"port\": \"\", \"lb\": \"\" } ] } ] } }, \"name\": \"testapp\", \"templateImage\": \"\", \"image\": \"/assets/apps/template.png\", \"id\": 9, \"templateName\": \"test\", \"group\": { \"id\": 4, \"name\": \"Lakehouse\" }, \"environment\": \"Test\" }"
+            postBody = "{ \"tiers\": { \"App\": { \"linkedTiers\": [], \"instances\": [ { \"instance\": { \"type\": \"docker\", \"cloud\": \"MyVCenter\", \"layout\": { \"code\": \"docker-1.7-single\", \"id\": 280 }, \"name\": \"get-started\", \"expireDays\": \"1\" }, \"volumes\": [ { \"rootVolume\": true, \"name\": \"root\", \"size\": 1 } ], \"backup\": { \"createBackup\": false }, \"config\": { \"expose\": 8080, \"dockerImageVersion\": \"latest\", \"dockerRegistryId\": \"\", \"dockerImage\": \"jjeagleson/get-started\" }, \"plan\": { \"id\": 99, \"code\": \"container-128\" }, \"metadata\": [ { \"name\": \"\", \"value\": \"\" } ], \"evars\": [ { \"name\": \"\", \"value\": \"\" } ], \"ports\": [ { \"name\": \"web\", \"port\": \"80\", \"lb\": \"\" } ] } ] } }, \"name\": \"testapp\", \"templateImage\": \"\", \"image\": \"/assets/apps/template.png\", \"id\": 9, \"templateName\": \"test\", \"group\": { \"id\": 4, \"name\": \"Lakehouse\" }, \"environment\": \"Test\" }"
 
-			echo "bearer is ${bearer}"
-			
-			//def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', customHeaders: [[name: 'Authorization', value: "BEARER ${bearer}"]], requestBody: postBody, url: "http://192.168.1.69/api/apps"
-			
 			echo "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
 			
 			sh "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
-			//def postresponse = readFile 'post.out'
-			
-			//echo "postresponse is ${postresponse}"
 			
 			// echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
         }
