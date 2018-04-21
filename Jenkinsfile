@@ -47,33 +47,9 @@ node {
             Map<?, ?> postBody = [ "image": "/assets/apps/template.png", "tiers": [ "App": [ "linkedTiers": [ "Database" ], "tier": [ "bootOrder": 1, "lockedFields": [ "bootOrder" ] ], "instances": [ [ "instance": [ "type": "tomcat", "cloud": "MyVCenter", "name": "tomcat", "expireDays": "1", "layout": [ "code": "tomcat-7.0.82-single", "id": 119 ] ], "volumes": [ [ "rootVolume": true, "name": "root", "size": 1 ] ], "backup": [ "createBackup": false ], "plan": [ "id": 99, "code": "container-128" ], "metadata": [ [ "name": "", "value": "" ] ], "evars": [ [ "name": "", "value": "" ] ], "loadBalancer": [ [ "externalPort": 8080, "vipShared": "off", "externalAddress": "off" ] ] ] ] ], "Database": [ "linkedTiers": [], "instances": [ [ "instance": [ "type": "mysql", "cloud": "MyVCenter", "name": "mysql", "expireDays": "1", "layout": [ "code": "mysql-5.6-single", "id": 108 ] ], "volumes": [ [ "rootVolume": true, "name": "root", "size": 5 ] ], "backup": [ "createBackup": false ], "plan": [ "id": 101, "code": "container-512" ], "metadata": [ [ "name": "", "value": "" ] ], "evars": [ [ "name": "", "value": "" ] ], "config": [ "rootPassword": "object00", "username": "eaglesojsa", "password": "object00" ] ] ] ] ], "name": "MyApp", "templateImage": "", "id": 8, "templateName": "MyApp_Template", "group": [ "id": 4, "name": "Lakehouse" ], "environment": "Test" ]
 
 
-		echo "bearer is ${bearer}"
-	
-		
-
-		// Define our URL and make the connection
-		def url = new URL(morpheusUrl)
-		def conn = url.openConnection()
-		// Set the connection verb and headers
-		conn.setRequestMethod("POST")
-		conn.setRequestProperty("Content-Type", "application/json")
-		// Required to send the request body of our POST
-		conn.doOutput = true
-
-		// Create our JSON Authentication string
-		//def authString = "{\"username\": \"${user}\", \"password\": \"${pass}\"}"
-
-		// Send our request
-		def writer = new OutputStreamWriter(conn.outputStream)
-		writer.write(postBody)
-		writer.flush()
-		writer.close()
-		conn.connect()
-
-		// Parse and return the token
-		def result = parseJSON(conn.content.text)
-		echo "result is ${result}"
-		echo result.token
+			echo "bearer is ${bearer}"
+			
+			def response = httpRequest customHeaders: [[name: 'Authorization', value: 'BEARER ${bearer}']], url: ${morpheusUrl}
 			
 			
            // echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
