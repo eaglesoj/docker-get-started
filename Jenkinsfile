@@ -50,7 +50,7 @@ node {
 			
 			//def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', customHeaders: [[name: 'Authorization', value: "BEARER ${bearer}"]], requestBody: postBody, url: "http://192.168.1.69/api/apps"
 			
-			sh "curl -XPOST \"${morpheusUrl}\" -H \"Authorization: BEARER ${bearer}\" -H 'Content-Type: application/json' -d \"${postBody}\""
+			sh "curl -k -XPOST \"${morpheusUrl}\" -H \"Authorization: BEARER ${bearer}\" -H 'Content-Type: application/json' -d \"${postBody}\""
 			
 			// echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
         }
