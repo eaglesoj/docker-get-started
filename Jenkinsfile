@@ -54,7 +54,7 @@ node {
 			def accesstoken = authresponse.access_token
 			echo "accesstoken is ${accesstoken}"
 			
-            Map<?, ?> postBody = [ "image": "/assets/apps/template.png", "tiers": [ "App": [ "linkedTiers": [ "Database" ], "tier": [ "bootOrder": 1, "lockedFields": [ "bootOrder" ] ], "instances": [ [ "instance": [ "type": "tomcat", "cloud": "MyVCenter", "name": "tomcat", "expireDays": "1", "layout": [ "code": "tomcat-7.0.82-single", "id": 119 ] ], "volumes": [ [ "rootVolume": true, "name": "root", "size": 1 ] ], "backup": [ "createBackup": false ], "plan": [ "id": 99, "code": "container-128" ], "metadata": [ [ "name": "", "value": "" ] ], "evars": [ [ "name": "", "value": "" ] ], "loadBalancer": [ [ "externalPort": 8080, "vipShared": "off", "externalAddress": "off" ] ] ] ] ], "Database": [ "linkedTiers": [], "instances": [ [ "instance": [ "type": "mysql", "cloud": "MyVCenter", "name": "mysql", "expireDays": "1", "layout": [ "code": "mysql-5.6-single", "id": 108 ] ], "volumes": [ [ "rootVolume": true, "name": "root", "size": 5 ] ], "backup": [ "createBackup": false ], "plan": [ "id": 101, "code": "container-512" ], "metadata": [ [ "name": "", "value": "" ] ], "evars": [ [ "name": "", "value": "" ] ], "config": [ "rootPassword": "object00", "username": "eaglesojsa", "password": "object00" ] ] ] ] ], "name": "MyApp", "templateImage": "", "id": 8, "templateName": "MyApp_Template", "group": [ "id": 4, "name": "Lakehouse" ], "environment": "Test" ]
+            postBody = '{ "tiers": { "App": { "linkedTiers": [], "instances": [ { "instance": { "type": "docker", "cloud": "MyVCenter", "layout": { "code": "docker-1.7-single", "id": 280 }, "name": "${userInitials}-${cloudCode}-${type}-${sequence+3000}", "expireDays": "1" }, "volumes": [ { "rootVolume": true, "name": "root", "size": 1 } ], "backup": { "createBackup": false }, "plan": { "id": 99, "code": "container-128" }, "metadata": [ { "name": "", "value": "" } ], "evars": [ { "name": "", "value": "" } ], "config": { "expose": 8080, "dockerImageVersion": "latest", "dockerRegistryId": "", "dockerImage": "jjeagleson/get-started" }, "ports": [ { "name": "", "port": "", "lb": "" } ] } ] } }, "name": "testapp", "templateImage": "", "image": "/assets/apps/template.png", "id": 9, "templateName": "test", "group": { "id": 4, "name": "Lakehouse" }, "environment": "Test" }'
 
 			echo "bearer is ${bearer}"
 			
@@ -62,7 +62,7 @@ node {
 			
 			echo "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d \"${postBody}\""
 			
-			sh "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d \"${postBody}\""
+			sh "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d ${postBody}"
 			//def postresponse = readFile 'post.out'
 			
 			//echo "postresponse is ${postresponse}"
