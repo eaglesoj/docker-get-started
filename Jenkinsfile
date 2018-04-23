@@ -53,17 +53,8 @@ node {
 }
 def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     def morpheusAppurl = "${morpheusUrl}/api/apps"
-    //authenticate with Morpheus
-    def morpheusAuth = sh ( 
-        script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\"",
-        returnStdout: true
-    ).trim()
-    def jsonSlurper = new JsonSlurper()
-    def authresponse = jsonSlurper.parseText(morpheusAuth)
-    def accesstoken = authresponse.access_token
-    //unset objects or will cause NonSerialized error
-    jsonSlurper = null
-    authresponse = null
+	//authenticate and get token
+	def accesstoken = MorpheusAuth("${morpheusUrl}","${bearer}")
     //make http post
     echo "running command: curl -k -X POST \"${morpheusAppurl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
     def morpheusHTTP = sh (
@@ -72,4 +63,18 @@ def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     ).trim()
     //return morpheusHTTP
     return "${morpheusHTTP}"
+}
+def MorpheusAuth(String morpheusUrl,String bearer) {
+	//authenticate with Morpheus
+    def morpheusAuth = sh ( 
+        script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\"",
+        returnStdout: true
+    ).trim()
+	def jsonSlurper = new JsonSlurper()
+    def authresponse = jsonSlurper.parseText(morpheusAuth)
+    accesstoken = authresponse.access_token
+    //unset objects or will cause NonSerialized error
+    jsonSlurper = null
+    authresponse = null
+	return accesstoken
 }
