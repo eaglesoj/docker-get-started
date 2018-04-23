@@ -62,6 +62,8 @@ def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     def authresponse = jsonSlurper.parseText(morpheusAuth)
     echo "authresponse is ${authresponse}"
     def accesstoken = authresponse.access_token
+    jsonSlurper = null
+    
     echo "accesstoken is ${accesstoken}"
     //make http post
     echo "command to run: curl -k -X POST \"${morpheusAppurl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
