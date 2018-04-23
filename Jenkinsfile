@@ -71,6 +71,5 @@ node {
             returnStdout: true
         ).trim()
         return morpheusHTTP
-    }: 
-
+    }
 }
