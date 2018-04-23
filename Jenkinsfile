@@ -50,26 +50,25 @@ node {
 			// echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
         }
     }
-
-    def MorpheusAppBuild(morpheusUrl,postBody,bearer) {
-        def morpheusAppurl = "${morpheusUrl}/api/app"
-        //authenticate with Morpheus
-        def morpheusAuth = sh ( 
-            script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\" > curl.out",
-            returnStdout: true
-        ).trim()
-        def jsonSlurper = new JsonSlurper()
-        def authresponse = jsonSlurper.parseText(morpheusAuth)
-        echo "authresponse is ${authresponse}"
-        def accesstoken = authresponse.access_token
-        echo "accesstoken is ${accesstoken}"
-        //make http post
-        echo "command to run: curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
-        
-        def morpheusHTTP = sh (
-            script: "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'",
-            returnStdout: true
-        ).trim()
-        return morpheusHTTP
-    }
+}
+def MorpheusAppBuild(morpheusUrl,postBody,bearer) {
+    def morpheusAppurl = "${morpheusUrl}/api/app"
+    //authenticate with Morpheus
+    def morpheusAuth = sh ( 
+        script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\" > curl.out",
+        returnStdout: true
+    ).trim()
+    def jsonSlurper = new JsonSlurper()
+    def authresponse = jsonSlurper.parseText(morpheusAuth)
+    echo "authresponse is ${authresponse}"
+    def accesstoken = authresponse.access_token
+    echo "accesstoken is ${accesstoken}"
+    //make http post
+    echo "command to run: curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
+    a
+    def morpheusHTTP = sh (
+        script: "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'",
+        returnStdout: true
+    ).trim()
+    return morpheusHTTP
 }
