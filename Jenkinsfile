@@ -64,9 +64,9 @@ def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     def accesstoken = authresponse.access_token
     echo "accesstoken is ${accesstoken}"
     //make http post
-    echo "command to run: curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
+    echo "command to run: curl -k -X POST \"${morpheusAppurl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
     def morpheusHTTP = sh (
-        script: "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'",
+        script: "curl -k -X POST \"${morpheusAppurl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'",
         returnStdout: true
     ).trim()
     //return morpheusHTTP
