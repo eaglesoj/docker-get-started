@@ -51,7 +51,7 @@ node {
         }
     }
 }
-def MorpheusAppBuild(morpheusUrl,postBody,bearer) {
+def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     def morpheusAppurl = "${morpheusUrl}/api/app"
     //authenticate with Morpheus
     def morpheusAuth = sh ( 
