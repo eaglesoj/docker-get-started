@@ -52,7 +52,7 @@ node {
     }
 }
 def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
-    def morpheusAppurl = "${morpheusUrl}/api/app"
+    def morpheusAppurl = "${morpheusUrl}/api/apps"
     //authenticate with Morpheus
     def morpheusAuth = sh ( 
         script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\"",
