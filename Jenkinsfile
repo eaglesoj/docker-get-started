@@ -62,6 +62,7 @@ def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     def authresponse = jsonSlurper.parseText(morpheusAuth)
     echo "authresponse is ${authresponse}"
     def accesstoken = authresponse.access_token
+    //unset objects or will cause NonSerialized error
     jsonSlurper = null
     authresponse = null
     echo "accesstoken is ${accesstoken}"
