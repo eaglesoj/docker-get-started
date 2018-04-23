@@ -47,14 +47,13 @@ node {
             String postBody = '{ "tiers": { "App": { "linkedTiers": [], "instances": [ { "instance": { "type": "docker", "cloud": "MyVCenter", "layout": { "code": "docker-1. 7-single", "id": 280 }, "name": "get-started", "expireDays": "1" }, "volumes": [ { "rootVolume": true, "name": "root", "size": 1 } ], "backup": { "createBackup": false }, "config": { "expose": 8080, "dockerImageVersion": "latest", "dockerRegistryId": "", "dockerImage":"jjeagleson/get-started" }, "plan": { "id": 99, "code": "container-128" }, "metadata": [ { "name": "", "value": "" } ], "evars": [ { "name":"", "value": "" } ], "ports": [ { "name": "web", "port": "80", "lb": "" } ] } ] } }, "name": "testapp", "templateImage": "", "image": "/assets/apps/template.png", "id": 9, "templateName": "test", "group": { "id": 4, "name": "Lakehouse" }, "environment": "Test" }'
             def response = MorpheusAppBuild("${morpheusUrl}","${postBody}","${bearer}")
             echo "response is ${response}"
-			// echo morpheusApp.buildApp(morpheusUrl, postBody, "${bearer}")
         }
     }
 }
 def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     def morpheusAppurl = "${morpheusUrl}/api/apps"
 	//authenticate and get token
-	def accesstoken = MorpheusAuth("${morpheusUrl}","${bearer}")
+	def accesstoken = MorpheusAuth(morpheusUrl,bearer)
     //make http post
     echo "running command: curl -k -X POST \"${morpheusAppurl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
     def morpheusHTTP = sh (
@@ -65,7 +64,6 @@ def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     return "${morpheusHTTP}"
 }
 def MorpheusAuth(String morpheusUrl,String bearer) {
-	//authenticate with Morpheus
     def morpheusAuth = sh ( 
         script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\"",
         returnStdout: true
