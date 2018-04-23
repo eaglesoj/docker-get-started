@@ -55,7 +55,7 @@ def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     def morpheusAppurl = "${morpheusUrl}/api/app"
     //authenticate with Morpheus
     def morpheusAuth = sh ( 
-        script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\" > curl.out",
+        script: "curl -k -X POST --data \"${bearer}\" \"${morpheusUrl}/oauth/token?grant_type=password&scope=write&client_id=morph-customer\"",
         returnStdout: true
     ).trim()
     def jsonSlurper = new JsonSlurper()
@@ -65,7 +65,6 @@ def MorpheusAppBuild(String morpheusUrl,String postBody,String bearer) {
     echo "accesstoken is ${accesstoken}"
     //make http post
     echo "command to run: curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'"
-    a
     def morpheusHTTP = sh (
         script: "curl -k -X POST \"${morpheusUrl}\" -H \"Authorization: BEARER ${accesstoken}\" -H \"Content-Type: application/json\" -d '${postBody}'",
         returnStdout: true
