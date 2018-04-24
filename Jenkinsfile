@@ -1,6 +1,5 @@
 import groovy.json.JsonOutput 
 import groovy.json.JsonSlurper
-@Library("jenkins-workflow-libs") _
 
 node {
 
